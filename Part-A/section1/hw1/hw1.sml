@@ -6,18 +6,11 @@
             argument. (If the two dates are the same, the result is false.)
 *)
 fun is_older(date1 : int * int * int, date2 : int * int * int) =
-    let
-        fun helper(lhs : int, rhs : int) =
-            if lhs < rhs
-            then true
-            else false
-    in
-        if #1 date1 <> #1 date2
-        then helper(#1 date1, #1 date2)
-        else if #2 date1 <> #2 date2
-        then helper(#2 date1, #2 date2)
-        else helper(#3 date1, #3 date2)
-    end
+    if #1 date1 <> #1 date2
+    then #1 date1 < #1 date2
+    else if #2 date1 <> #2 date2
+    then #2 date1 < #2 date2
+    else #3 date1 < #3 date2
 
 
 (* number_in_month:
