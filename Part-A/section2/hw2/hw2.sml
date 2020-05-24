@@ -168,7 +168,7 @@ fun score(held_cards, goal) =
     let val sum = sum_cards(held_cards)
         val preliminary_score = if sum > goal then 3 * (sum - goal) else goal - sum
     in
-        if (all_same_color(held_cards))
+        if all_same_color(held_cards)
         then preliminary_score div 2
         else preliminary_score
     end
@@ -186,12 +186,10 @@ fun officiate(card_list, move_list, goal) =
         else
             case move_list of
                 [] => score(held_cards, goal)
-            |   hd_move::tl_moves =>
-                    case hd_move of
-                        Draw => (case card_list of
+            |   Draw::tl_moves => (case card_list of
                                     [] => score(held_cards, goal)
                                 |   hd_card::tl_cards => helper(tl_cards, tl_moves, hd_card::held_cards))
-                    |   Discard c => helper(card_list, tl_moves, remove_card(held_cards, c, IllegalMove))
+            |   (Discard c)::tl_moves => helper(card_list, tl_moves, remove_card(held_cards, c, IllegalMove))
     in
         helper(card_list, move_list, [])
     end
